@@ -1,3 +1,6 @@
+/*
+Query Class to create the tables in the database
+
 package com.location.tables;
 
 import com.location.config.DatabaseConfiguration;
@@ -9,7 +12,9 @@ import java.sql.Statement;
 public class PostgresTableCreator {
 
     public static void createTables() {
-        Connection connection = DatabaseConfiguration.getConnection();
+        // Create an instance of DatabaseConfiguration (loads properties from application.properties)
+        DatabaseConfiguration config = new DatabaseConfiguration();
+        Connection connection = config.getConnection();
         Statement statement = null;
 
         try {
@@ -41,8 +46,6 @@ public class PostgresTableCreator {
         }
     }
 
-    public static void main(String[] args) {
-        createTables();
-    }
-
 }
+
+ */
