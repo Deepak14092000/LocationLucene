@@ -1,21 +1,34 @@
 package com.location.config;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class DatabaseConfiguration {
+    private static Properties properties;
 
-    private static final String jdbcURL = "jdbc:postgresql://localhost:5432/pondicherry_locations";
-    private static final String username = "postgres";
-    private static final String password = "pgadmin";
-
-    public static Connection getConnection() {
-        try {
-            return DriverManager.getConnection(jdbcURL, username, password);
-        } catch (SQLException e) {
+    static {
+        properties = new Properties();
+        try (FileInputStream fis = new FileInputStream("application.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to connect to the database.");
         }
     }
+
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public static void main(String[] args) {
+
+        String dbUrl = getProperty("db.url");
+        String dbUsername = getProperty("db.username");
+        String appLogFile = getProperty("app.log.file");
+
+        System.out.println("Database URL: " + dbUrl);
+        System.out.println("Database Username: " + dbUsername);
+        System.out.println("Log File: " + appLogFile);
+    }
 }
+
